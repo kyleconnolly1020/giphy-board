@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class = "container">
+        <!--Make html element for buttons to be displayed --> 
+        <div id="buttons-layout"></div><br>
+
+        <!--Form for the text input will go below--> 
+        <form id="new-gif-form">
+            <label for="gifinput">Add a new type of gif</label>
+            <input type="text" id="textinput"><br>
+            
+            <!--Submit button to add the gif from the text input-->
+            <input id="gif-submit" type="submit" value="Find New GIFs">
+        </form>
+
+        <!--HTML element to display the gifs -->
+        <div id="gifview"></div>
+    </div>
+
+    <script src="assets/javascript/app.js"></script>
+</body>
+</html>
