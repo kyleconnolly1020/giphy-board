@@ -9,7 +9,7 @@ gifButtons();
 function showGifs(){
     
     var hero = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + hero + "&api_key=dc6zaTOxFJmzC&limit=10"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + hero + "&api_key=dc6zaTOxFJmzC&limit=10"
 
     $.ajax({
         url: queryURL,
@@ -21,9 +21,11 @@ function showGifs(){
             var gifDisplay = $("<div>");
             
             for(var i=0; i < response.data.length; i++){
-            var imagediv = $("<div>");
-            imagediv.html("<img class='imgdiv' src='" + response.data[i].images.original.url + "'>");
-            imagediv.append(response.data[i].rating);
+            var imagediv = $("<img>");
+            var rating = response.data[i].rating;
+            var p = $("<p>").text("Rating: " + rating);
+            imagediv.attr("src", response.data[i].images.original.url);
+            gifDisplay.append(p);
             gifDisplay.append(imagediv);
             
             }
