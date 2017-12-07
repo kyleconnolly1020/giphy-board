@@ -9,7 +9,7 @@ gifButtons();
 function showGifs(){
     
     var hero = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + hero + "&api_key=dc6zaTOxFJmzC&limit=10"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + hero + "&api_key=dc6zaTOxFJmzC&limit=10"
 
     $.ajax({
         url: queryURL,
@@ -18,19 +18,22 @@ function showGifs(){
         .done(function(response) {
             $("#gifview").empty();
             console.log(response);
-            var gifDisplay = $("<div>");
             
             for(var i=0; i < response.data.length; i++){
-            var imagediv = $("<img>");
+            var gifDisplay = $("<div class='hero-div'>");
+            var imagediv = $("<img class='hero-img'>");
             var rating = response.data[i].rating;
             var p = $("<p>").text("Rating: " + rating);
-            imagediv.attr("src", response.data[i].images.original.url);
+            imagediv.attr("src", response.data[i].images.original_still.url);
+            imagediv.attr("data-still", response.data[i].images.original_still.url);
+            imagediv.attr("data-animate", response.data[i].images.original.url);
+            imagediv.attr("data-state", "still");
+
             gifDisplay.append(p);
             gifDisplay.append(imagediv);
-            
+            $("#gifview").append(gifDisplay);
             }
 
-            $("#gifview").append(gifDisplay);
         });
 
 }
@@ -55,6 +58,20 @@ function gifButtons(){
     }
 }
 
+
+//create a function to start and stop the gifs when they are clicked 
+function gifInteract(){
+    var state = $(this).attr("data-state"); 
+
+    if (state === "still"){
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    }   else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+}
+
 //create an on.("click") anonymous function to run the code
 //when the submit button is hit
 //grab the input from the "#textinput" div
@@ -74,6 +91,5 @@ $("#gif-submit").on("click", function(event){
 $(document).on("click", ".hero", showGifs);
 
 
-// //javascript, jQuery
-// var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5");
-// xhr.done(function(data) { console.log("success got data", data); });
+//run a function on "click" for dynamically generated gifs 
+$(document).on("click",".hero-img", gifInteract);
